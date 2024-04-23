@@ -1,4 +1,4 @@
-package ru.neoflex;
+package ru.neoflex.pages;
 
 import org.openqa.selenium.WebDriver;
 

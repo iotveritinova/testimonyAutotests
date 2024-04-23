@@ -1,7 +1,9 @@
-package ru.neoflex;
+package ru.neoflex.manager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import ru.neoflex.pages.MainPage;
+import ru.neoflex.pages.SendPage;
 
 public class ApplicationManager {
 
@@ -27,7 +29,7 @@ public class ApplicationManager {
         this.sendPage = sendPage;
     }
 
-    protected void init() throws InterruptedException {
+    public void init() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("http://127.0.0.1:5500/index.html");
@@ -37,7 +39,7 @@ public class ApplicationManager {
         Thread.sleep(1000);
     }
 
-    protected void close() {
+    public void close() {
         driver.quit();
     }
 }
