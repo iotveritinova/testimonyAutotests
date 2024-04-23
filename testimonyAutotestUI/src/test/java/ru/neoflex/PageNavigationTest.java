@@ -8,11 +8,14 @@ public class PageNavigationTest extends TestBase {
 
     @Test
     public void FromMainToSendAndBack() throws InterruptedException {
+        //нужно отрефакторить PageNavigationTest пока не понятно почему applicationManager.getMainPage(); возвращает null
+        //тут нужно будет убрать и по тексту заменить mainPage и sendPage по аналогии
+        // на applicationManager.getMainPage() и applicationManager.getSendPage()
+        // а пока я устал и сдаюсь
         MainPage mainPage = new MainPage(applicationManager.driver);
         SendPage sendPage = new SendPage(applicationManager.driver);
-        //mainPage.clickSend();
-        MainPage mainPage1 = applicationManager.getMainPage();
-        mainPage1.clickSend();
+        //
+        mainPage.clickSend();
         //applicationManager.getMainPage().clickSend();
         Assertions.assertEquals(sendPage.getHeaderText(), "Передача показаний");
         sendPage.clickBackButton();
