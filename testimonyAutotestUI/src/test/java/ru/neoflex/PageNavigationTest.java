@@ -21,7 +21,7 @@ public class PageNavigationTest extends TestBase {
         //эта строка пусть висит ее убрать в рамках урока про ожидание
         Thread.sleep(1000);
         sendPage.clickBackButton();
-        //Assertions.assertEquals(mainPage.getHeaderText(), "Neo ЖКХ");
+        Assertions.assertEquals(mainPage.getHeaderText(), "Neo ЖКХ");
     }
 
     @Test

@@ -4,12 +4,13 @@ import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebDriver;
 
-public class MainPage {
+public class MainPage extends BasePage{
 
-    private WebDriver driver;
+    //private WebDriver driver;
 
     public MainPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+       // this.driver = driver;
     }
 
     private By dataSend = By.xpath("//*[@id=\"send_button\"]");
@@ -17,17 +18,20 @@ public class MainPage {
     private By catalog = By.xpath("//*[@id=\"catalog_button\"]");
 
     public SendPage clickSend() {
-        driver.findElement(dataSend).click();
+        //driver.findElement(dataSend).click();
+        click(driver.findElement(dataSend));
         return new SendPage(driver);
     }
 
     public HistoryPage clickHistory() {
-        driver.findElement(dataHistory).click();
+        //driver.findElement(dataHistory).click();
+        click(driver.findElement(dataHistory));
         return new HistoryPage(driver);
     }
 
     public PricePage clickPrice() {
-        driver.findElement(catalog).click();
+        //driver.findElement(catalog).click();
+        click(driver.findElement(catalog));
         return new PricePage(driver);
     }
 

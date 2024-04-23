@@ -3,12 +3,10 @@ package ru.neoflex;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class SendPage {
-    private final WebDriver driver;
+public class SendPage extends BasePage{
 
     public SendPage(WebDriver driver) {
-        this.driver = driver;
-
+        super(driver);
     }
 
     private By header = By.xpath("/html/body/h1");
@@ -21,7 +19,7 @@ public class SendPage {
     }
 
     public void clickBackButton() {
-        driver.findElement(backButton).click();
-
+        click(driver.findElement(backButton));
     }
+
 }
