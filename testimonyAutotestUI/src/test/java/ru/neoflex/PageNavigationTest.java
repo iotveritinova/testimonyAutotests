@@ -9,32 +9,13 @@ import ru.neoflex.pages.SendPage;
 public class PageNavigationTest extends TestBase {
 
     @Test
-    public void TestOfRefactoring() throws InterruptedException {
-        MainPage mainPage = new MainPage(applicationManager.driver);
-        MainPage mainPage1 = applicationManager.getMainPage();
-        if (mainPage1 == null) {
-            System.out.println("this is null");
-        } else {
-            System.out.println(mainPage1.getHeaderText());
-        }
-    }
-
-    @Test
     public void FromMainToSendAndBack() throws InterruptedException {
-        //нужно отрефакторить PageNavigationTest пока не понятно почему applicationManager.getMainPage(); возвращает null
-        //тут нужно будет убрать и по тексту заменить mainPage и sendPage по аналогии
-        // на applicationManager.getMainPage() и applicationManager.getSendPage()
-        // а пока я устал и сдаюсь
-        MainPage mainPage = new MainPage(applicationManager.driver);
-        SendPage sendPage = new SendPage(applicationManager.driver);
-        //
-        mainPage.clickSend();
-        //applicationManager.getMainPage().clickSend();
-        Assertions.assertEquals(sendPage.getHeaderText(), "Передача показаний");
+        applicationManager.getMainPage().clickSend();
+        Assertions.assertEquals(applicationManager.getSendPage().getHeaderText(), "Передача показаний");
         //эта строка пусть висит ее убрать в рамках урока про ожидание
         Thread.sleep(1000);
-        sendPage.clickBackButton();
-        Assertions.assertEquals(mainPage.getHeaderText(), "Neo ЖКХ");
+        applicationManager.getSendPage().clickBackButton();
+        Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
 
     @Test

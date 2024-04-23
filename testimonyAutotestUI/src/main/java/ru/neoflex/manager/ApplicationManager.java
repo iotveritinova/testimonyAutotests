@@ -7,13 +7,11 @@ import ru.neoflex.pages.SendPage;
 
 public class ApplicationManager {
 
-    //protected
     public WebDriver driver;
     public MainPage mainPage;
     public SendPage sendPage;
 
     public MainPage getMainPage() {
-        //I have no idea why this returns null
                return mainPage;
     }
 
@@ -33,9 +31,8 @@ public class ApplicationManager {
         System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("http://127.0.0.1:5500/index.html");
-        //нужно отрефакторить PageNavigationTest пока не понятно почему applicationManager.getMainPage(); возвращает null
-        MainPage mainPage = new MainPage(driver);
-        SendPage sendPage = new SendPage(driver);
+         mainPage = new MainPage(driver);
+         sendPage = new SendPage(driver);
         Thread.sleep(1000);
     }
 
