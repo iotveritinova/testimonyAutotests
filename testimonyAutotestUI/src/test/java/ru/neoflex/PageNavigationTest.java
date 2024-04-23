@@ -18,6 +18,8 @@ public class PageNavigationTest extends TestBase {
         mainPage.clickSend();
         //applicationManager.getMainPage().clickSend();
         Assertions.assertEquals(sendPage.getHeaderText(), "Передача показаний");
+        //эта строка пусть висит ее убрать в рамках урока про ожидание
+        Thread.sleep(1000);
         sendPage.clickBackButton();
         //Assertions.assertEquals(mainPage.getHeaderText(), "Neo ЖКХ");
     }
