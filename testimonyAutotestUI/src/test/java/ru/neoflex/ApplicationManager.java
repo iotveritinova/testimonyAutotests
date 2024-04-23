@@ -11,7 +11,8 @@ public class ApplicationManager {
     public SendPage sendPage;
 
     public MainPage getMainPage() {
-        return mainPage;
+        //I have no idea why this returns null
+               return mainPage;
     }
 
     public void setMainPage(MainPage mainPage) {
@@ -31,8 +32,8 @@ public class ApplicationManager {
         driver = new ChromeDriver();
         driver.get("http://127.0.0.1:5500/index.html");
         //нужно отрефакторить PageNavigationTest пока не понятно почему applicationManager.getMainPage(); возвращает null
-        //MainPage mainPage = new MainPage(driver);
-        //SendPage sendPage = new SendPage(driver);
+        MainPage mainPage = new MainPage(driver);
+        SendPage sendPage = new SendPage(driver);
         Thread.sleep(1000);
     }
 

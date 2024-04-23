@@ -7,6 +7,17 @@ import org.openqa.selenium.By;
 public class PageNavigationTest extends TestBase {
 
     @Test
+    public void TestOfRefactoring() throws InterruptedException {
+        MainPage mainPage = new MainPage(applicationManager.driver);
+        MainPage mainPage1 = applicationManager.getMainPage();
+        if (mainPage1 == null) {
+            System.out.println("this is null");
+        } else {
+            System.out.println(mainPage1.getHeaderText());
+        }
+    }
+
+    @Test
     public void FromMainToSendAndBack() throws InterruptedException {
         //нужно отрефакторить PageNavigationTest пока не понятно почему applicationManager.getMainPage(); возвращает null
         //тут нужно будет убрать и по тексту заменить mainPage и sendPage по аналогии
