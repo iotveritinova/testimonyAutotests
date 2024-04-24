@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebDriver;
 
-public class MainPage extends BasePage{
+public class MainPage extends Element{
 
     //private WebDriver driver;
 
@@ -35,11 +35,6 @@ public class MainPage extends BasePage{
         return new PricePage(driver);
     }
 
-    private By header = By.xpath("/html/body/h1");
-
-    public String getHeaderText() {
-        return driver.findElement(header).getText();
-    }
 }
 /*dataSend - переменная, представляющая кнопку Передача показаний
         dataHistory - переменная, представляющая кнопку История показаний
