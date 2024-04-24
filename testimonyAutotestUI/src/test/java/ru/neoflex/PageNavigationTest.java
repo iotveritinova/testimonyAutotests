@@ -19,37 +19,23 @@ public class PageNavigationTest extends TestBase {
     }
 
     @Test
-
     public void FromMainToHistoryAndBack() throws InterruptedException {
-
-        MainPage mainPage = new MainPage(applicationManager.driver);
-
-        mainPage.clickHistory();
-
-        Assertions.assertEquals(applicationManager.driver.findElement(By.xpath("/html/body/h1")).getText(), "История показаний");
-
-        applicationManager.driver.findElement(By.xpath("//*[@id=\"back_button\"]")).click();
-
-        Assertions.assertEquals(applicationManager.driver.findElement(By.xpath("/html/body/h1")).getText(), "Neo ЖКХ");
-
+        applicationManager.getMainPage().clickHistory();
+        Assertions.assertEquals(applicationManager.getHistoryPage().getHeaderText(), "История показаний");
+        applicationManager.getHistoryPage().clickBackButton();
+        Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
 
     @Test
-
     public void FromMainToPriceAndBack() {
-
-        MainPage mainPage = new MainPage(applicationManager.driver);
-
-        mainPage.clickPrice();
-
+        applicationManager.getMainPage().clickPrice();
         Assertions.assertEquals(applicationManager.driver.findElement(By.xpath("/html/body/h1")).getText(), "Справочник стоимости услуг");
 
         applicationManager.driver.findElement(By.xpath("//*[@id=\"back_button\"]")).click();
 
-        Assertions.assertEquals(applicationManager.driver.findElement(By.xpath("/html/body/h1")).getText(), "Neo ЖКХ");
 
+        Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
-
 }
 
 /*
