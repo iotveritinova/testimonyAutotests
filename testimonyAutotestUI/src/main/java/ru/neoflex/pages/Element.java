@@ -16,6 +16,7 @@ public class Element extends BasePage{
     }
 
     public void clickBackButton() {
+        waitForElementClickable(driver.findElement(backButton), driver);
         click(driver.findElement(backButton));
     }
 }

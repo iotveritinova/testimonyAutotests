@@ -7,6 +7,9 @@ import ru.neoflex.pages.MainPage;
 import ru.neoflex.pages.PricePage;
 import ru.neoflex.pages.SendPage;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 public class ApplicationManager {
 
     public WebDriver driver;
@@ -51,6 +54,10 @@ public class ApplicationManager {
     public void init() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
+        //deprecated method from the study course
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //not deprecated method
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("http://127.0.0.1:5500/index.html");
         mainPage = new MainPage(driver);
         sendPage = new SendPage(driver);

@@ -6,17 +6,15 @@ import org.junit.jupiter.api.Test;
 public class PageNavigationTest extends TestBase {
 
     @Test
-    public void FromMainToSendAndBack() throws InterruptedException {
+    public void FromMainToSendAndBack() {
         applicationManager.getMainPage().clickSend();
         Assertions.assertEquals(applicationManager.getSendPage().getHeaderText(), "Передача показаний");
-        //эта строка пусть висит ее убрать в рамках урока про ожидание
-        Thread.sleep(1000);
         applicationManager.getSendPage().clickBackButton();
         Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
 
     @Test
-    public void FromMainToHistoryAndBack() throws InterruptedException {
+    public void FromMainToHistoryAndBack() {
         applicationManager.getMainPage().clickHistory();
         Assertions.assertEquals(applicationManager.getHistoryPage().getHeaderText(), "История показаний");
         applicationManager.getHistoryPage().clickBackButton();
@@ -31,18 +29,3 @@ public class PageNavigationTest extends TestBase {
         Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
 }
-
-/*
-@BeforeEach - метод, помеченный данной аннотацией JUnit, будет выполняться перед каждым тестом
-@Test - метод, помеченный данной аннотацией JUnit, является тестом
-@AfterEach - метод, помеченный данной аннотацией JUnit, будет выполняться после каждого теста
-        Assertions.assertEquals(X, Y) - метод JUnit для проверки эквивалентности результатов, где X - это фактический результат, а Y - это ожидаемый результат
-        Работа серии этих тестов заключается в следующем:
-        1) Запуск главной страницы сайта
-        2) Нажатие на кнопку для перехода на соответствующую страницу
-        3) Вычитывание названия страницы
-        4) Сравнение текущего названия страницы с ожидаемым
-        5) Нажатие на кнопку для перехода на главную страницу
-        6) Вычитывание названия страницы
-        7) Сравнение текущего названия страницы с ожидаемым
-*/
