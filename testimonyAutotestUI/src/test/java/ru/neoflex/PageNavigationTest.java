@@ -2,9 +2,6 @@ package ru.neoflex;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import ru.neoflex.pages.MainPage;
-import ru.neoflex.pages.SendPage;
 
 public class PageNavigationTest extends TestBase {
 
