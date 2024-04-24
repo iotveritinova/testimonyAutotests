@@ -3,6 +3,9 @@ package ru.neoflex.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+
 public class SendPage extends Element {
 
     public SendPage(WebDriver driver) {
@@ -17,31 +20,30 @@ public class SendPage extends Element {
         return new SendPage(driver);
     }
 
+    private By date = By.xpath("//*[@id=\"date\"]");
+    private By coldData = By.xpath("//*[@id=\"coldData\"]");
+    private By hotData = By.xpath("//*[@id=\"hotData\"]");
+    private By gasData = By.xpath("//*[@id=\"gasData\"]");
     private By elecData = By.xpath("//*[@id=\"elecData\"]");
-    private CharSequence value = "123";
 
-    /* protected void type(By locator, String text) {
-    click(locator);
-    if (text != null) {
-      String existingText = wd.findElement(locator).getAttribute("value");
-      if (!text.equals(existingText)) {
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
-      }
-    }
-  }*/
-    public void fillElecData() {
-        fillDataField(elecData,value);
-    }
 
-    private void fillDataField(By elecData, CharSequence value) {
-        if (isElementPresent(this.elecData)) {
-            driver.findElement(this.elecData).clear();
-            driver.findElement(this.elecData).sendKeys(this.value);
-        }
+    public void fillAllData() {
+        String value = "678";
+        //для даты нужно будет поменять формат но пока так
+        String dateValue = String.valueOf(LocalDate.now());
+      /*  {
+            try {
+                dateValue = String.valueOf(new SimpleDateFormat("dd-MM-yyyy")
+                        .parse(String.valueOf(java.time.LocalDate.now())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }*/
+        fillDataField(date, dateValue);
+        fillDataField(coldData, null);
+        fillDataField(hotData, value);
+        fillDataField(gasData, value);
+        fillDataField(elecData, value);
     }
 
-    public String getElecData() {
-        return "getElecData()";
-    }
 }

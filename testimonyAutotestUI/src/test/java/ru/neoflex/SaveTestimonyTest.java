@@ -3,6 +3,8 @@ package ru.neoflex;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+
 public class SaveTestimonyTest extends TestBase {
     //Использовать: Java, Selenium WebDriver
     //Создать java-класс, который будет выполнять перечисленные ниже действия:
@@ -14,10 +16,9 @@ public class SaveTestimonyTest extends TestBase {
     public void SaveTestimony() {
         applicationManager.getMainPage().clickSend();
         Assertions.assertEquals(applicationManager.getSendPage().getHeaderText(), "Передача показаний");
-        applicationManager.getSendPage().fillElecData();
+        applicationManager.getSendPage().fillAllData();
         applicationManager.getSendPage().clickSendButton();
         //для тестового приложения проверить значения полей кажется нельзя?
-        System.out.println(applicationManager.getSendPage().getElecData());
         Assertions.assertEquals(applicationManager.getSendPage().getHeaderText(), "Передача показаний");
 
     }

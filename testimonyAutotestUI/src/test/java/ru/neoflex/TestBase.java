@@ -15,7 +15,7 @@ public class TestBase {
 
     @AfterEach
     public void closePage() {
-       // applicationManager.close();
+         applicationManager.close();
     }
 
 }

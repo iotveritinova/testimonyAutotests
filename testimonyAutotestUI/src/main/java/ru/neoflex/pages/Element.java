@@ -19,4 +19,11 @@ public class Element extends BasePage{
         waitForElementClickable(driver.findElement(backButton), driver);
         click(driver.findElement(backButton));
     }
+
+    protected void fillDataField(By dataField, String value) {
+        if (value!=null&&isElementPresent(dataField)) {
+            driver.findElement(dataField).clear();
+            driver.findElement(dataField).sendKeys(value);
+        }
+    }
 }
