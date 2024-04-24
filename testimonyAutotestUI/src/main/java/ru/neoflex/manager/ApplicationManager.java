@@ -13,7 +13,7 @@ public class ApplicationManager {
     public MainPage mainPage;
     public SendPage sendPage;
     public HistoryPage historyPage;
-    //public PricePage pricePage;
+    public PricePage pricePage;
 
 
     public MainPage getMainPage() {
@@ -39,14 +39,15 @@ public class ApplicationManager {
     public void setHistoryPage(HistoryPage historyPage) {
         this.historyPage = historyPage;
     }
-  /*  public PricePage getPricePage() {
+
+    public PricePage getPricePage() {
         return pricePage;
     }
 
     public void setPricePage(PricePage pricePage) {
         this.pricePage = pricePage;
     }
-*/
+
     public void init() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
@@ -54,6 +55,8 @@ public class ApplicationManager {
         mainPage = new MainPage(driver);
         sendPage = new SendPage(driver);
         historyPage=new HistoryPage(driver);
+        pricePage=new PricePage(driver);
+
         Thread.sleep(1000);
     }
 

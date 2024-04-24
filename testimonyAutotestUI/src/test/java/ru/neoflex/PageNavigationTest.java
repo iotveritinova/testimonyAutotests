@@ -29,11 +29,8 @@ public class PageNavigationTest extends TestBase {
     @Test
     public void FromMainToPriceAndBack() {
         applicationManager.getMainPage().clickPrice();
-        Assertions.assertEquals(applicationManager.driver.findElement(By.xpath("/html/body/h1")).getText(), "Справочник стоимости услуг");
-
-        applicationManager.driver.findElement(By.xpath("//*[@id=\"back_button\"]")).click();
-
-
+        Assertions.assertEquals(applicationManager.getPricePage().getHeaderText(), "Справочник стоимости услуг");
+        applicationManager.getPricePage().clickBackButton();
         Assertions.assertEquals(applicationManager.getMainPage().getHeaderText(), "Neo ЖКХ");
     }
 }
