@@ -1,9 +1,13 @@
 package ru.neoflex;
 
+//import org.junit.jupiter.api.Assertions;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.params.ParameterizedTest;
+//import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.neoflex.model.SendFormData;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -20,13 +24,18 @@ public class SaveTestimonyTest extends TestBase {
     public static Iterator<Object[]> dataRead() throws IOException {
         return sendPageTestData();
     }
+
     @MethodSource("dataRead")
  @ParameterizedTest
    // @Test
-    public void SaveTestimony() {
-        applicationManager.getMainPage().clickSend();
+   // public void SaveTestimony() {
+       public void SaveTestimony(SendFormData sendFormData) {
+
+            applicationManager.getMainPage().clickSend();
         Assertions.assertEquals(applicationManager.getSendPage().getHeaderText(), "Передача показаний");
-        String value="1";
+        String value="123";
+        //String value=sendFormData.getElectric();
+        System.out.println(value);
         applicationManager.getSendPage().inputDate(value);
         applicationManager.getSendPage().inputColdWater(value);
         applicationManager.getSendPage().inputHotWater(value);
