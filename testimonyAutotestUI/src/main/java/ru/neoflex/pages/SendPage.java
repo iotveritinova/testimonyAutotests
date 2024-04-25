@@ -3,7 +3,6 @@ package ru.neoflex.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 
 public class SendPage extends Element {

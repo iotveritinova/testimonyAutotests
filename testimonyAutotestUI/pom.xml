@@ -30,8 +30,10 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>com-google-gson</artifactId>
+            <version>RELEASE113</version>
+        </dependency>
     </dependencies>
-
-
 </project>
