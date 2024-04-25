@@ -21,9 +21,19 @@ public class Element extends BasePage {
     }
 
     protected void fillDataField(By dataField, String value) {
-        if (value!=null&&isElementPresent(dataField)) {
+        if (value != null && isElementPresent(dataField)) {
             driver.findElement(dataField).clear();
             driver.findElement(dataField).sendKeys(value);
+        }
+    }
+
+    protected void inputDataField(String fieldId, String value) {
+        if (fieldId != null && value != null) {
+            By dataField = By.xpath(String.format("//*[@id=\"%s\"]", fieldId));
+            if (isElementPresent(dataField)) {
+                driver.findElement(dataField).clear();
+                driver.findElement(dataField).sendKeys(value);
+            }
         }
     }
 }

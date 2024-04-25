@@ -23,17 +23,15 @@
             <artifactId>selenium-java</artifactId>
             <version>4.19.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.2</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>com-google-gson</artifactId>
             <version>RELEASE113</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.0-M1</version>
         </dependency>
     </dependencies>
 </project>

@@ -14,8 +14,9 @@ public class TestBase {
     }
 
     @AfterEach
-    public void closePage() {
-         applicationManager.close();
+    public void closePage() throws InterruptedException {
+        Thread.sleep(2000);
+        applicationManager.close();
     }
 
 }

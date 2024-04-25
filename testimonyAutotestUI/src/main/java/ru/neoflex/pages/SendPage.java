@@ -1,9 +1,15 @@
 package ru.neoflex.pages;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Iterator;
+
+import static ru.neoflex.utils.DataProvider.sendPageTestData;
 
 public class SendPage extends Element {
 
@@ -14,35 +20,31 @@ public class SendPage extends Element {
     private By sendData = By.xpath("//*[@id=\"button\"]");
 
 
-    public SendPage clickSendButton() {
+    public SendPage clickSubmitButton() {
         click(driver.findElement(sendData));
         return new SendPage(driver);
     }
 
-    private By date = By.xpath("//*[@id=\"date\"]");
-    private By coldData = By.xpath("//*[@id=\"coldData\"]");
-    private By hotData = By.xpath("//*[@id=\"hotData\"]");
-    private By gasData = By.xpath("//*[@id=\"gasData\"]");
-    private By elecData = By.xpath("//*[@id=\"elecData\"]");
-
-
-    public void fillAllData() {
-        String value = "678";
-        //для даты нужно будет поменять формат но пока так
-        String dateValue = String.valueOf(LocalDate.now());
-      /*  {
-            try {
-                dateValue = String.valueOf(new SimpleDateFormat("dd-MM-yyyy")
-                        .parse(String.valueOf(java.time.LocalDate.now())));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }*/
-        fillDataField(date, dateValue);
-        fillDataField(coldData, null);
-        fillDataField(hotData, value);
-        fillDataField(gasData, value);
-        fillDataField(elecData, value);
+    public void inputDate(String value) {
+        inputDataField("date", value);
     }
 
+    public void inputColdWater(String value) {
+        inputDataField("coldData", value);
+    }
+
+    public void inputHotWater(String value) {
+        inputDataField("hotData", value);
+
+    }
+
+    public void inputGas(String value) {
+        inputDataField("gasData", value);
+
+    }
+
+    public void inputElectric(String value) {
+        inputDataField("elecData", value);
+
+    }
 }
