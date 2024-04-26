@@ -1,10 +1,4 @@
 package ru.neoflex;
-
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.params.ParameterizedTest;
-//import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.neoflex.model.SendFormData;
@@ -26,8 +20,8 @@ public class SaveTestimonyTest extends TestBase {
     }
 
     @MethodSource("dataRead")
- @ParameterizedTest
-       public void SaveTestimony(SendFormData sendFormData) {
+    @ParameterizedTest
+    public void SaveTestimony(SendFormData sendFormData) {
         applicationManager.getMainPage().clickSend();
         applicationManager.getSendPage().inputDate(sendFormData.getDate());
         applicationManager.getSendPage().inputColdWater(sendFormData.getColdWater());

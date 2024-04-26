@@ -8,7 +8,6 @@ import ru.neoflex.pages.PricePage;
 import ru.neoflex.pages.SendPage;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
@@ -61,8 +60,8 @@ public class ApplicationManager {
         driver.get("http://127.0.0.1:5500/index.html");
         mainPage = new MainPage(driver);
         sendPage = new SendPage(driver);
-        historyPage=new HistoryPage(driver);
-        pricePage=new PricePage(driver);
+        historyPage = new HistoryPage(driver);
+        pricePage = new PricePage(driver);
 
         Thread.sleep(1000);
     }

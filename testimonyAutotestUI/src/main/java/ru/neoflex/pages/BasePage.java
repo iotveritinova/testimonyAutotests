@@ -18,6 +18,11 @@ public class BasePage {
         this.driver = driver;
     }
 
+    public static WebElement waitForElementClickable(WebElement element, WebDriver driver) {
+        return (new WebDriverWait(driver, WAITING_TIME_IN_SECONDS))
+                .until(ExpectedConditions.elementToBeClickable(element));
+    }
+
     protected void click(WebElement element) {
         element.click();
     }
@@ -29,11 +34,6 @@ public class BasePage {
         } catch (NoSuchElementException ex) {
             return false;
         }
-    }
-
-    public static WebElement waitForElementClickable(WebElement element, WebDriver driver) {
-        return (new WebDriverWait(driver, WAITING_TIME_IN_SECONDS))
-                .until(ExpectedConditions.elementToBeClickable(element));
     }
 
 }

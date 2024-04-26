@@ -1,24 +1,15 @@
 package ru.neoflex.pages;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Iterator;
-
-import static ru.neoflex.utils.DataProvider.sendPageTestData;
-
 public class SendPage extends Element {
+
+    private By sendData = By.xpath("//*[@id=\"button\"]");
 
     public SendPage(WebDriver driver) {
         super(driver);
     }
-
-    private By sendData = By.xpath("//*[@id=\"button\"]");
-
 
     public SendPage clickSubmitButton() {
         click(driver.findElement(sendData));

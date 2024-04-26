@@ -21,7 +21,8 @@ public class DataProvider {
                 line = reader.readLine();
             }
             Gson gson = new Gson();
-            List<SendFormData> sendFormData = gson.fromJson(json, new TypeToken<List<SendFormData>>() {}.getType());
+            List<SendFormData> sendFormData = gson.fromJson(json, new TypeToken<List<SendFormData>>() {
+            }.getType());
             return sendFormData.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
         }
     }
