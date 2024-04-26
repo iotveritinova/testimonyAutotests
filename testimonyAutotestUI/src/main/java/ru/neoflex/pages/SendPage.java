@@ -2,6 +2,9 @@ package ru.neoflex.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class SendPage extends Element {
 
@@ -9,6 +12,8 @@ public class SendPage extends Element {
 
     public SendPage(WebDriver driver) {
         super(driver);
+        // для инициализации элементов помеченных аннотацией @FindBy
+        PageFactory.initElements(driver, this);
     }
 
     public SendPage clickSubmitButton() {
@@ -22,35 +27,51 @@ public class SendPage extends Element {
     // public void inputHotWater(String value) {         inputDataField("hotData", value);     }
     // public void inputGas(String value) {         inputDataField("gasData", value);     }
     // public void inputElectric(String value) {         inputDataField("elecData", value);     }
-    private By dateInput = By.xpath("//*[@id=\"date\"]");
-    private By coldWaterInput = By.xpath("//*[@id=\"coldData\"]");
-    private By hotWaterInput = By.xpath("//*[@id=\"hotData\"]");
-    private By gasInput = By.xpath("//*[@id=\"gasData\"]");
-    private By electricInput = By.xpath("//*[@id=\"elecData\"]");
+    //
+    // Все это можно упростить использую аннотацию @FindBy реализовав фабрику веб элементов. Для этого заменим
+    //private By coldWaterInput = By.xpath("//*[@id='coldData']");
+    //на
+    //@FindBy(xpath = "//*[@id='coldData']")
+    //private WebElement coldWaterInput;
+
+    @FindBy(xpath = "//*[@id=\"date\"]")
+    private WebElement dateInput;
+
+    @FindBy(xpath = "//*[@id='coldData']")
+    private WebElement coldWaterInput;
+
+    @FindBy(xpath = "//*[@id=\"hotData\"]")
+    private WebElement hotWaterInput;
+
+    @FindBy(xpath = "//*[@id=\"gasData\"]")
+    private WebElement gasInput;
+
+    @FindBy(xpath = "//*[@id=\"elecData\"]")
+    private WebElement electricInput;
 
     public void inputDate(String inputValue) {
-        waitForElementClickable(driver.findElement(dateInput), driver);
-        inputText(driver.findElement(dateInput), inputValue);
+        waitForElementClickable(dateInput, driver);
+        inputText(dateInput, inputValue);
     }
 
     public void inputColdWater(String inputValue) {
-        waitForElementClickable(driver.findElement(coldWaterInput), driver);
-        inputText(driver.findElement(coldWaterInput), inputValue);
+        waitForElementClickable(coldWaterInput, driver);
+        inputText(coldWaterInput, inputValue);
     }
 
     public void inputHotWater(String inputValue) {
-        waitForElementClickable(driver.findElement(hotWaterInput), driver);
-        inputText(driver.findElement(hotWaterInput), inputValue);
+        waitForElementClickable(hotWaterInput, driver);
+        inputText(hotWaterInput, inputValue);
     }
 
     public void inputGas(String inputValue) {
-        waitForElementClickable(driver.findElement(gasInput), driver);
-        inputText(driver.findElement(gasInput), inputValue);
+        waitForElementClickable(gasInput, driver);
+        inputText(gasInput, inputValue);
     }
 
     public void inputElectric(String inputValue) {
-        waitForElementClickable(driver.findElement(electricInput), driver);
-        inputText(driver.findElement(electricInput), inputValue);
+        waitForElementClickable(electricInput, driver);
+        inputText(electricInput, inputValue);
     }
 
 
