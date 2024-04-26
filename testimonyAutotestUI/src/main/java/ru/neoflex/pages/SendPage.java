@@ -47,4 +47,10 @@ public class SendPage extends Element {
         inputDataField("elecData", value);
 
     }
+
+    //в приложении отсутствует resultValue поэтому такая аннотация, потом разберусь
+    @Deprecated
+    public short getResultValue() {
+        return 0;
+    }
 }
