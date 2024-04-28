@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.neoflex.utils.Table;
 
 public class SendPage extends Element {
 
@@ -80,4 +81,9 @@ public class SendPage extends Element {
     public short getResultValue() {
         return 0;
     }
+
+    public Table getResultTable() {
+        return new Table(driver.findElement(By.xpath("//*[@id=\"table\"]")), driver);
+    }
+
 }
