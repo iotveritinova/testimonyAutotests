@@ -1,6 +1,5 @@
 <configuration>
     <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
-
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>test-logback-${bySecond}.log</file>
         <!-- set immediateFlush to false for much higher logging throughput -->
@@ -18,10 +17,8 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-
     <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE" />
-
     </root>
 </configuration>
