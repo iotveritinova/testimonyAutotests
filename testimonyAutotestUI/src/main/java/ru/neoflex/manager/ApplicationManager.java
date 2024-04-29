@@ -51,7 +51,8 @@ public class ApplicationManager {
     }
 
     public void init() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         //deprecated method from the study course
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
