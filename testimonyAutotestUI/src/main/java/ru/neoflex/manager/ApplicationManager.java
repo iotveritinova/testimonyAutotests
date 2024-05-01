@@ -1,7 +1,7 @@
 package ru.neoflex.manager;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.Browser;
 import ru.neoflex.pages.HistoryPage;
 import ru.neoflex.pages.MainPage;
 import ru.neoflex.pages.PricePage;
@@ -54,16 +54,18 @@ public class ApplicationManager {
         this.pricePage = pricePage;
     }
 
-    public void init() throws InterruptedException, IOException {
+    public void init() throws IOException {
         Properties properties = new Properties();
         String target = properties.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/main/resources/%s.properties", target))));
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         //System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-        driver = new ChromeDriver();
+        //driver = new ChromeDriver();
+        driver = DriverFactory.createDriver(String.valueOf(Browser.FIREFOX));
         //deprecated method from the study course
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //not deprecated method
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(properties.getProperty("web.baseUrl"));
         mainPage = new MainPage(driver);

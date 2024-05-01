@@ -11,7 +11,7 @@ public class TestBase {
     protected final ApplicationManager applicationManager = new ApplicationManager();
 
     @BeforeEach
-    public void setupPage() throws InterruptedException, IOException {
+    public void setupPage() throws IOException {
         applicationManager.init();
     }
 

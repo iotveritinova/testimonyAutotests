@@ -9,9 +9,9 @@ import org.openqa.selenium.remote.Browser;
 public class DriverFactory {
 
     static WebDriver createDriver(String browser) {
-        if (browser.equals(Browser.CHROME)) {
+        if (browser.equals(String.valueOf(Browser.CHROME))) {
             return new ChromeDriver();
-        } else if (browser.equals(Browser.FIREFOX)) {
+        } else if (browser.equals(String.valueOf(Browser.FIREFOX))) {
             return new FirefoxDriver();
         } else {
             return new ChromeDriver();
