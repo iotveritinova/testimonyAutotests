@@ -7,7 +7,11 @@ import ru.neoflex.pages.MainPage;
 import ru.neoflex.pages.PricePage;
 import ru.neoflex.pages.SendPage;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
 public class ApplicationManager {
 
@@ -50,7 +54,10 @@ public class ApplicationManager {
         this.pricePage = pricePage;
     }
 
-    public void init() throws InterruptedException {
+    public void init() throws InterruptedException, IOException {
+        Properties properties = new Properties();
+        String target = properties.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/main/resources/%s.properties", target))));
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         //System.setProperty("webdriver.chrome.driver", "D:\\neoCourseBanking\\ОАТ-Web Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
@@ -58,13 +65,11 @@ public class ApplicationManager {
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //not deprecated method
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("http://127.0.0.1:5500/index.html");
+        driver.get(properties.getProperty("web.baseUrl"));
         mainPage = new MainPage(driver);
         sendPage = new SendPage(driver);
         historyPage = new HistoryPage(driver);
         pricePage = new PricePage(driver);
-
-        Thread.sleep(1000);
     }
 
     public void close() {

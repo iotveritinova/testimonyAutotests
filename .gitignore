@@ -4,3 +4,7 @@
 /testimonyAutotestUI/target
 /testimonyAutotestUI/target
 *.class
+/testimonyAutotestUI/allure-results
+*.log
+*.class
+*.class
