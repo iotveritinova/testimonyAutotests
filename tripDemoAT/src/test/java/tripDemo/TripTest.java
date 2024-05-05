@@ -1,11 +1,14 @@
 package tripDemo;
 
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.restassured.RestAssured.given;
 
 public class TripTest {
 
@@ -33,5 +36,15 @@ public class TripTest {
         passengerList.add(passenger1);
         passengerList.add(passenger2);
         trip.setPassengerList(passengerList);
+
+        Response response = given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .body(trip)
+                .when()
+                .post("http://localhost:8080/trip/createTrip")
+                .thenReturn();
+        //CacheRequest response = null;
+        System.out.println(response.getBody().prettyPrint());
     }
 }
