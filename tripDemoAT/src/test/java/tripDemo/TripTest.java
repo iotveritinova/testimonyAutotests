@@ -3,7 +3,7 @@ package tripDemo;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
-import tripDemo.model.JsonGenerator;
+import tripDemo.generator.JsonGenerator;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
 

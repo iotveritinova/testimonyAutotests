@@ -1,4 +1,4 @@
-package tripDemo.model;
+package tripDemo.generator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
