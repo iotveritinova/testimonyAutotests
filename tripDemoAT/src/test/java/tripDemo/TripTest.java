@@ -16,10 +16,42 @@ public class TripTest {
     @Test
     public void createTest() {
         Trip trip = createDefaultBodyTrip();
-        Response response = given().log().all(true).contentType("application/json").accept("application/json").body(trip).when().post("http://localhost:8080/trip/createTrip").thenReturn();
+        Response response = given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .body(trip)
+                .when()
+                .post("http://localhost:8080/trip/createTrip")
+                .thenReturn();
         System.out.println(response.getBody().prettyPrint());
     }
 
+    @Test
+    public void putTrip() {
+        Trip trip = createDefaultBodyTrip();
+        trip.setTownTo("London");
+        trip.setId(Long.valueOf("2"));
+        Response response = given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .body(trip)
+                .when()
+                .put("http://localhost:8080/trip/putTrip")
+                .thenReturn();
+        System.out.println(response.getBody().prettyPrint());
+    }
+
+    @Test
+    public void deleteTrip() {
+        given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .when()
+                .delete("http://localhost:8080/trip/deleteTrip/1")
+                .then()
+                .assertThat()
+                .statusCode(200);
+    }
 
     @Test
     public void getTrip() {
