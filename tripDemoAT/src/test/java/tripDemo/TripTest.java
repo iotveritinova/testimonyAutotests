@@ -15,8 +15,41 @@ public class TripTest {
 
     @Test
     public void createTest() {
-        Trip trip = new Trip();
+        Trip trip = createDefaultBodyTrip();
+        Response response = given().log().all(true).contentType("application/json").accept("application/json").body(trip).when().post("http://localhost:8080/trip/createTrip").thenReturn();
+        System.out.println(response.getBody().prettyPrint());
+    }
 
+
+    @Test
+    public void getTrip() {
+        given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .when()
+                .get("http://localhost:8080/trip/getTrip/2")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("townFrom", equalTo("Moscow"));
+    }
+
+    @Test
+    public void createTripAs() {
+        Trip trip = createDefaultBodyTrip();
+        Trip tripResult = given().log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .body(trip)
+                .when()
+                .post("http://localhost:8080/trip/createTrip")
+                .as(Trip.class);
+        System.out.println(tripResult);
+
+    }
+
+    private Trip createDefaultBodyTrip() {
+        Trip trip = new Trip();
         trip.setCompanyId(1L);
         trip.setPlane("Plane№2");
         trip.setTownFrom("Moscow");
@@ -37,29 +70,6 @@ public class TripTest {
         passengerList.add(passenger1);
         passengerList.add(passenger2);
         trip.setPassengerList(passengerList);
-
-        Response response = given().log().all(true)
-                .contentType("application/json")
-                .accept("application/json")
-                .body(trip)
-                .when()
-                .post("http://localhost:8080/trip/createTrip")
-                .thenReturn();
-        //CacheRequest response = null;
-        System.out.println(response.getBody().prettyPrint());
-    }
-
-    @Test
-    public void getTrip() {
-        given()
-                .log().all(true)
-                .contentType("application/json")
-                .accept("application/json")
-                .when()
-                .get("http://localhost:8080/trip/getTrip/2")
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .body("townFrom", equalTo("Moscow"));
+        return trip;
     }
 }
