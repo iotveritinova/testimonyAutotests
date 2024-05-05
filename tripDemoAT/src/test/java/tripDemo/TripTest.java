@@ -2,17 +2,28 @@ package tripDemo;
 
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomUtils;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.*;
+import tripDemo.dictionaries.IPathEnum;
+import tripDemo.dictionaries.TripPathEnum;
 import tripDemo.generator.JsonGenerator;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
+import tripDemo.service.ConfigQA;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class TripTest {
+
+    private static Map<IPathEnum, String> serviceDataMap;
+
+    @BeforeClass
+    public static void init(){
+        serviceDataMap= ConfigQA.getInstance().getServiceDataMap();
+    }
 
     @Test
     public void createTrip() {
@@ -29,7 +40,7 @@ public class TripTest {
                 .accept("application/json")
                 .body(body)
                 .when()
-                .post("http://localhost:8080/trip/createTrip")
+                .post(serviceDataMap.get(TripPathEnum.CREATE_TRIP))
                 .thenReturn();
         System.out.println(response.getBody().prettyPrint());
         /*
@@ -61,7 +72,7 @@ public class TripTest {
                 .accept("application/json")
                 .body(body )
                 .when()
-                .put("http://localhost:8080/trip/putTrip")
+                .put(serviceDataMap.get(TripPathEnum.PUT_TRIP))
                 .thenReturn();
 
         System.out.println(response.getBody().prettyPrint());
@@ -74,7 +85,7 @@ public class TripTest {
                 .contentType("application/json")
                 .accept("application/json")
                 .when()
-                .delete("http://localhost:8080/trip/deleteTrip/6")
+                .delete(serviceDataMap.get(TripPathEnum.DELETE_TRIP))
                 .thenReturn();
         System.out.println(response.getBody().prettyPrint());
     }
@@ -86,7 +97,7 @@ public class TripTest {
                 .contentType("application/json")
                 .accept("application/json")
                 .when()
-                .get("http://localhost:8080/trip/getTrip/2")
+                .get(serviceDataMap.get(TripPathEnum.GET_TRIP))
                 .then()
                 .assertThat()
                 .statusCode(200)
