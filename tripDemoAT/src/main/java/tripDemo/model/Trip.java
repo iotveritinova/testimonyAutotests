@@ -62,5 +62,10 @@ public class Trip {
         public Trip build() {
             return trip;
         }
+
+        public Builder withId(long id) {
+            trip.id = id;
+            return this;
+        }
     }
 }
