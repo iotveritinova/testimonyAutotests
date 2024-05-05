@@ -1,10 +1,12 @@
 package tripDemo;
 
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,14 @@ public class TripTest {
 
     @Test
     public void createTest() {
-        Trip trip = createDefaultBodyTrip();
+        Trip trip = new Trip.Builder()
+                .withRandomMainInfo(1)
+                .withPassengers(new ArrayList<>() {{
+                    for (int i = 0; i < RandomUtils.nextInt(1, 3); i++) {
+                        add(new Passenger.Builder().withRandomCompletely().build());
+                    }
+                }}).build();
+       // Trip trip = createDefaultBodyTrip();
         Response response = given().log().all(true)
                 .contentType("application/json")
                 .accept("application/json")
@@ -86,8 +95,8 @@ public class TripTest {
         trip.setPlane("Plane№2");
         trip.setTownFrom("Moscow");
         trip.setTownTo("Pekin");
-        trip.setTimeOut("2021-05-16T03:31:43");
-        trip.setTimeIn("2021-05-16T03:31:43");
+        trip.setTimeOut(LocalDateTime.parse("2021-05-16T03:31:43"));
+        trip.setTimeIn(LocalDateTime.parse("2021-05-16T03:31:43"));
 
         List<Passenger> passengerList = new ArrayList<>();
         Passenger passenger1 = new Passenger();
