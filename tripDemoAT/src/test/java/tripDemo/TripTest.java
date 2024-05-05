@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TripTest {
 
@@ -18,7 +19,7 @@ public class TripTest {
 
         trip.setCompanyId(1L);
         trip.setPlane("Plane№2");
-        trip.setTownFrom("Moskow");
+        trip.setTownFrom("Moscow");
         trip.setTownTo("Pekin");
         trip.setTimeOut("2021-05-16T03:31:43");
         trip.setTimeIn("2021-05-16T03:31:43");
@@ -46,5 +47,19 @@ public class TripTest {
                 .thenReturn();
         //CacheRequest response = null;
         System.out.println(response.getBody().prettyPrint());
+    }
+
+    @Test
+    public void getTrip() {
+        given()
+                .log().all(true)
+                .contentType("application/json")
+                .accept("application/json")
+                .when()
+                .get("http://localhost:8080/trip/getTrip/2")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("townFrom", equalTo("Moscow"));
     }
 }
