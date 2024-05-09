@@ -5,6 +5,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tripDemo.api.ApiHelper;
+import tripDemo.comparator.TripComparator;
 import tripDemo.dictionaries.IPathEnum;
 import tripDemo.dictionaries.TripPathEnum;
 import tripDemo.generator.JsonGenerator;
@@ -48,8 +49,9 @@ public class TripTest {
         String path = serviceDataMap.get(TripPathEnum.CREATE_TRIP);
         Response response = ApiHelper.post(path, result);
         System.out.println(response.getBody().prettyPrint());
+        Trip responseTrip = response.as(Trip.class);
+        new TripComparator(responseTrip, createTrip).compare();
     }
-
     @Test
     public void getTrip() {
         String path = serviceDataMap.get(TripPathEnum.GET_TRIP);
