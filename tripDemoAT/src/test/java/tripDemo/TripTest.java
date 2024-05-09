@@ -50,7 +50,9 @@ public class TripTest {
         Response response = ApiHelper.post(path, result);
         System.out.println(response.getBody().prettyPrint());
         Trip responseTrip = response.as(Trip.class);
-        new TripComparator(responseTrip, createTrip).compare();
+        //new TripComparator(responseTrip, createTrip).compare();
+        new TripComparator(responseTrip, createTrip).compareTrip();
+
     }
     @Test
     public void getTrip() {
