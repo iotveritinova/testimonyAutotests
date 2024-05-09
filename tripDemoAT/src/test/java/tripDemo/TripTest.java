@@ -1,26 +1,24 @@
 package tripDemo;
 
-import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import tripDemo.api.ApiHelper;
 import tripDemo.comparator.TripComparator;
 import tripDemo.dictionaries.IPathEnum;
-import tripDemo.dictionaries.TripPathEnum;
-import tripDemo.generator.JsonGenerator;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
 import tripDemo.service.ConfigQA;
+import tripDemo.steps.TripSteps;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 
 public class TripTest {
 
     private Map<IPathEnum, String> serviceDataMap;
     private Trip createTrip, putTrip;
+    //пока это поле меняется вручную
+    private long id=55L;
 
     @BeforeClass
     public void init() {
@@ -35,7 +33,7 @@ public class TripTest {
 
         putTrip = new Trip.Builder()
                 //Пока что нужно установить id существующей модели в базе
-                .withId(6L)
+                .withId(id)
                 .withRandomMainInfo(1)
                 .withPassengers(new ArrayList<>() {{
                     add(new Passenger.Builder()
@@ -44,37 +42,29 @@ public class TripTest {
                 }}).build();
     }
 
-    @Test
+
+    @Test (priority = 1)
     public void createTrip() {
-        String result = JsonGenerator.toJsonString(createTrip);
-        String path = serviceDataMap.get(TripPathEnum.CREATE_TRIP);
-        Response response = ApiHelper.post(path, result);
-        System.out.println(response.getBody().prettyPrint());
-        Trip responseTrip = response.as(Trip.class);
-        //new TripComparator(responseTrip, createTrip).compare();
-        Collections.sort(responseTrip.getPassengerList());
-        new TripComparator(responseTrip, createTrip).compareTrip();
-
+        Trip responseTrip = TripSteps.sendPost(createTrip);
+        new TripComparator(createTrip, responseTrip).compare();
     }
-    @Test
+
+    @Test (priority = 3)
     public void getTrip() {
-        String path = serviceDataMap.get(TripPathEnum.GET_TRIP);
-        Response response = ApiHelper.get(path, 6);
-        System.out.println(response.getBody().prettyPrint());
+        Trip responseTrip = TripSteps.sendGet(id);
+        new TripComparator(putTrip, responseTrip).compare();
     }
 
-    @Test
+    @Test (priority = 2)
     public void putTrip() {
-        String path = serviceDataMap.get(TripPathEnum.PUT_TRIP);
-        String result = JsonGenerator.toJsonString(putTrip);
-        Response response = ApiHelper.put(path, result);
-        System.out.println(response.getBody().prettyPrint());
+        Trip responseTrip = TripSteps.sendPut(putTrip);
+        new TripComparator(putTrip, responseTrip).compare();
     }
 
-    @Test
+    @Test (priority = 4)
     public void deleteTrip() {
-        String path = serviceDataMap.get(TripPathEnum.DELETE_TRIP);
-        Response response = ApiHelper.delete(path, 6);
-        System.out.println(response.getBody().prettyPrint());
+        Trip responseTrip = TripSteps.sendDelete(id);
+        new TripComparator(putTrip, responseTrip).compare();
     }
+
 }

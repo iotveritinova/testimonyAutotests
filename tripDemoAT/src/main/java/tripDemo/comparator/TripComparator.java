@@ -1,7 +1,6 @@
 package tripDemo.comparator;
 
 import lombok.AllArgsConstructor;
-import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TripComparator implements IComparator {
     private final Trip actual, expected;
 
+    /*
     public void compare() {
         assertThat(actual.getCompanyId()).isEqualTo(expected.getCompanyId());
         assertThat(actual.getPlane()).isEqualTo(expected.getPlane());
@@ -28,7 +28,9 @@ public class TripComparator implements IComparator {
         }
     }
 
-    public void compareTrip() {
+     */
+
+    public void compare() {
         assertThat(actual).usingRecursiveComparison()
                 .ignoringFields("id", "passengerList.id")
                 .isEqualTo(expected);
