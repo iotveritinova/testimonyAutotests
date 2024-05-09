@@ -14,6 +14,7 @@ import tripDemo.model.Trip;
 import tripDemo.service.ConfigQA;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class TripTest {
@@ -51,6 +52,7 @@ public class TripTest {
         System.out.println(response.getBody().prettyPrint());
         Trip responseTrip = response.as(Trip.class);
         //new TripComparator(responseTrip, createTrip).compare();
+        Collections.sort(responseTrip.getPassengerList());
         new TripComparator(responseTrip, createTrip).compareTrip();
 
     }
