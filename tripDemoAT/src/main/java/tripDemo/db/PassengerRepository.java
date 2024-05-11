@@ -1,5 +1,6 @@
 package tripDemo.db;
 
+import tripDemo.dictionaries.ServiceEnum;
 import tripDemo.model.Passenger;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class PassengerRepository {
     //которые будут возвращать соответствующие модели.
 
     public static Passenger getPassengerById(Integer id) throws SQLException {
-        ResultSet resultSet = getConnection().createStatement()
+        ResultSet resultSet = getConnection(ServiceEnum.TRIP).createStatement()
                 .executeQuery(String.format(quiry, id));
         resultSet.next();
         Passenger passenger=new Passenger();

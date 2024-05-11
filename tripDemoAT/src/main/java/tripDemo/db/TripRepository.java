@@ -1,5 +1,6 @@
 package tripDemo.db;
 
+import tripDemo.dictionaries.ServiceEnum;
 import tripDemo.model.Trip;
 
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public class TripRepository {
     //которые будут возвращать соответствующие модели.
 
     public static Trip getTripById(Integer id) throws SQLException {
-        ResultSet resultSet = getConnection().createStatement()
+        ResultSet resultSet = getConnection(ServiceEnum.TRIP).createStatement()
                 .executeQuery(String.format(quiry, id));
         resultSet.next();
         Trip trip = new Trip();
