@@ -4,6 +4,8 @@ import org.apache.commons.lang3.RandomUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tripDemo.comparator.TripComparator;
+import tripDemo.db.PassengerRepository;
+import tripDemo.db.TripRepository;
 import tripDemo.dictionaries.IPathEnum;
 import tripDemo.model.Passenger;
 import tripDemo.model.Trip;
@@ -11,6 +13,7 @@ import tripDemo.service.ConfigQA;
 import tripDemo.steps.TripSteps;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class TripTest {
@@ -45,8 +48,17 @@ public class TripTest {
 
     @Test (priority = 1)
     public void createTrip() {
-        Trip responseTrip = TripSteps.sendPost(createTrip);
+           Trip responseTrip = TripSteps.sendPost(createTrip);
         new TripComparator(createTrip, responseTrip).compare();
+        TripRepository tripRepository = new TripRepository();
+        PassengerRepository passengerRepository = new PassengerRepository();
+        Trip tripFromBD = tripRepository.getById(responseTrip.getId());
+        for (Passenger passenger : responseTrip.getPassengerList()) {
+            Passenger passengerFormBD = passengerRepository.getById(passenger.getId());
+            tripFromBD.getPassengerList().add(passengerFormBD);
+        }
+        Collections.sort(tripFromBD.getPassengerList());
+        new TripComparator(createTrip, tripFromBD).compare();
     }
 
     @Test (priority = 3)

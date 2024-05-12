@@ -6,24 +6,56 @@ import tripDemo.service.ConfigQA;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseConnection {
-    private static Connection connection;
-    //4. Создать класс BaseConnection, в котором будут два статических метода getConnection и closeConnection.
-    // Метод getConnection() должен принимать параметр ServiceEnum, после этого проверять следующее:
-    // Если для данного сервиса уже есть созданная сессия, то вернуть ее, иначе создать новое подключение.
+    private final Map<ServiceEnum, Connection> connectionMap;
+    private final ConfigQA configQA;
 
-    public static Connection getConnection(ServiceEnum serviceEnum) throws SQLException {
-        ConnectionProperties connectionProperties = ConfigQA.getInstance()
-                .getDbConnectionDataMap().get(serviceEnum);
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(connectionProperties.getUrl(), connectionProperties.getUser(), connectionProperties.getPassword());
+    private static BaseConnection instance;
+
+    private BaseConnection() {
+        connectionMap = new ConcurrentHashMap<>();
+        configQA = ConfigQA.getInstance();
+    }
+
+    public static BaseConnection getInstance() {
+        if (instance == null) {
+            instance = new BaseConnection();
         }
-        return connection;
+        return instance;
     }
 
-    public static void closeConnection() throws SQLException {
-        connection.close();
+    public Connection getConnection(ServiceEnum serviceEnum) {
+        if (Objects.nonNull(serviceEnum)) {
+            return connectionMap.computeIfAbsent(serviceEnum,
+                    a -> {
+                        ConnectionProperties properties = configQA.getDbConnectionDataMap().get(a);
+                        Connection connection = null;
+                        try {
+                            connection = DriverManager.getConnection(properties.getUrl(),
+                                    properties.getUser(),
+                                    properties.getPassword());
+                        } catch (SQLException throwable) {
+                            throwable.printStackTrace();
+                        }
+                        return connection;
+                    });
+        }
+        throw new IllegalArgumentException();
     }
 
+    public void closeConnection(ServiceEnum serviceEnum) {
+        connectionMap.computeIfPresent(serviceEnum,
+                (a, b) -> {
+                    try {
+                        connectionMap.remove(a).close();
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
+                    return null;
+                });
+    }
 }

@@ -27,23 +27,31 @@ public class ConfigQA {
     }
 
     private ConfigQA() {
-       Config config = ConfigFactory.parseResources("config.conf");
-        String port, host;
+        Config config = ConfigFactory.parseResources("config.conf");
         for (ServiceEnum value : ServiceEnum.values()) {
             Config conf = config.getConfig("service").getConfig(value.name().toLowerCase());
-            host = conf.getString("host");
-            port = conf.getString("port");
-            Config pathsConf = conf.getConfig("path");
-            for (IPathEnum iPathEnum : value.getPathEnumList()) {
-                String path = pathsConf.getString(iPathEnum.name().toLowerCase());
-                serviceDataMap.put(iPathEnum, generateFullPath(host, port, path));
-            }
-            Config dbConf = conf.getConfig("db");
-            ConnectionProperties connectionProperties = new ConnectionProperties();
-            connectionProperties.setUrl(dbConf.getString("url"));
-            connectionProperties.setPassword(dbConf.getString("password"));
-            connectionProperties.setUser(dbConf.getString("user"));
-            dbConnectionDataMap.put(ServiceEnum.TRIP, connectionProperties);
+            readPaths(value, conf);
+            readConnectionProperties(value, conf);
+        }
+    }
+
+    private void readConnectionProperties(ServiceEnum value, Config conf) {
+        Config dbConf = conf.getConfig("db");
+        ConnectionProperties connectionProperties = new ConnectionProperties();
+        connectionProperties.setUrl(dbConf.getString("url"));
+        connectionProperties.setPassword(dbConf.getString("password"));
+        connectionProperties.setUser(dbConf.getString("user"));
+        dbConnectionDataMap.put(value, connectionProperties);
+    }
+
+    private void readPaths(ServiceEnum value, Config conf) {
+        String port, host;
+        host = conf.getString("host");
+        port = conf.getString("port");
+        Config pathsConf = conf.getConfig("path");
+        for (IPathEnum iPathEnum : value.getPathEnumList()) {
+            String path = pathsConf.getString(iPathEnum.name().toLowerCase());
+            serviceDataMap.put(iPathEnum, generateFullPath(host, port, path));
         }
     }
 
