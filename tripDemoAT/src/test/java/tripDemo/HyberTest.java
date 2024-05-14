@@ -17,7 +17,6 @@ public class HyberTest {
         configuration.configure();
         configuration.addAnnotatedClass(Passenger.class);
         configuration.addAnnotatedClass(Trip.class);
-
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);

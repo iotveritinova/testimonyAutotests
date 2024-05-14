@@ -39,8 +39,11 @@ public class Trip {
     @Column(name = "time_in")
     private LocalDateTime timeIn;
     //тут неверно тянется, разобраться что делать с таблицей trip_passenger
-    @OneToMany
-    @JoinColumn(name="id")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "TRIP_PASSENGER",
+            joinColumns = {@JoinColumn(name = "trip_id")},
+            inverseJoinColumns = {@JoinColumn(name = "passenger_id")}
+    )
     private final List<Passenger> passengerList = new ArrayList<>();
 
     public static class Builder {
