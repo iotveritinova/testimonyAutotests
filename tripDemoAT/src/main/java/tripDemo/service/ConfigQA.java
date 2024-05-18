@@ -41,6 +41,8 @@ public class ConfigQA {
         connectionProperties.setUrl(dbConf.getString("url"));
         connectionProperties.setPassword(dbConf.getString("password"));
         connectionProperties.setUser(dbConf.getString("user"));
+        connectionProperties.setUrl(dbConf.getString("driver"));
+        connectionProperties.setPassword(dbConf.getString("dialect"));
         dbConnectionDataMap.put(value, connectionProperties);
     }
 
@@ -58,4 +60,5 @@ public class ConfigQA {
     public String generateFullPath(String host, String port, String path) {
         return host + ":" + port + "/" + path;
     }
+
 }

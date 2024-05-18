@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ConnectionProperties {
 
-    String url, password, user;
+    String url, password, user, driver, dialect;
 
 }
    /* Вооружившись всеми знаниями полученными в предыдущих уроках, предлагаю выполнить вам следующее задание:

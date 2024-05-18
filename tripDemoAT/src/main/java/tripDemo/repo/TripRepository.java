@@ -1,5 +1,6 @@
-package tripDemo.db;
+package tripDemo.repo;
 
+import tripDemo.db.BaseConnection;
 import tripDemo.dictionaries.ServiceEnum;
 import tripDemo.model.Trip;
 

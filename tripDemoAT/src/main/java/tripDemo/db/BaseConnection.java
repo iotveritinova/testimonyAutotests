@@ -1,13 +1,21 @@
 package tripDemo.db;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
 import tripDemo.dictionaries.ServiceEnum;
+import tripDemo.model.Company;
+import tripDemo.model.Passenger;
+import tripDemo.model.Trip;
 import tripDemo.service.ConfigQA;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseConnection {
@@ -47,6 +55,42 @@ public class BaseConnection {
         throw new IllegalArgumentException();
     }
 
+    public Connection getConnection2(ServiceEnum serviceEnum) {
+        if (Objects.nonNull(serviceEnum)) {
+            //(Session) wasn't in the manual
+            return connectionMap.computeIfAbsent(serviceEnum,
+                    a -> {
+                        Configuration configuration = new Configuration();
+                        configuration.setProperties(getSettings(a));
+                        getClasses(a).forEach(configuration::addAnnotatedClass);
+                        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                                .applySettings(configuration.getProperties()).build();
+                        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                        //(Connection) wasn't in the manual
+                        return (Connection) sessionFactory.openSession();
+                    });
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public Session getSession(ServiceEnum serviceEnum) {
+        if (Objects.nonNull(serviceEnum)) {
+            //(Session) wasn't in the manual
+            return (Session) connectionMap.computeIfAbsent(serviceEnum,
+                    a -> {
+                        Configuration configuration = new Configuration();
+                        configuration.setProperties(getSettings(a));
+                        getClasses(a).forEach(configuration::addAnnotatedClass);
+                        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                                .applySettings(configuration.getProperties()).build();
+                        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                        //(Connection) wasn't in the manual
+                        return (Connection) sessionFactory.openSession();
+                    });
+        }
+        throw new IllegalArgumentException();
+    }
+
     public void closeConnection(ServiceEnum serviceEnum) {
         connectionMap.computeIfPresent(serviceEnum,
                 (a, b) -> {
@@ -58,4 +102,28 @@ public class BaseConnection {
                     return null;
                 });
     }
+
+    //при помощи механизма switch, отберет нужные для работы с той или иной БД классы сущностей.
+    private List<Class<?>> getClasses(ServiceEnum serviceEnum) {
+        List<Class<?>> classes = new ArrayList<>();
+        switch (serviceEnum) {
+            case TRIP:
+                classes.add(Company.class);
+                classes.add(Trip.class);
+                classes.add(Passenger.class);
+        }
+        return classes;
+    }
+
+    private Properties getSettings(ServiceEnum serviceEnum) {
+        Properties properties = new Properties();
+        ConnectionProperties connectionProperties = configQA.getDbConnectionDataMap().get(serviceEnum);
+        properties.put(Environment.DRIVER, connectionProperties.getDriver());
+        properties.put(Environment.DIALECT, connectionProperties.getDialect());
+        properties.put(Environment.URL, connectionProperties.getUrl());
+        properties.put(Environment.USER, connectionProperties.getUser());
+        properties.put(Environment.PASS, connectionProperties.getPassword());
+        return properties;
+    }
+
 }
