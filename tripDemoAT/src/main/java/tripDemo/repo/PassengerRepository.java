@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PassengerRepository {
-    private final Connection connection = BaseConnection.getInstance().getConnection(ServiceEnum.TRIP);
+   /* private final Connection connection = BaseConnection.getInstance().getConnection(ServiceEnum.TRIP);
 
     public Passenger getById(long id) {
         String sql = "select * from passenger where id = ?";
@@ -34,4 +34,6 @@ public class PassengerRepository {
         }
         return passenger;
     }
+
+    */
 }

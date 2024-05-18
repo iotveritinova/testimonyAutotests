@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseConnection {
-    private final Map<ServiceEnum, Connection> connectionMap;
+    private final Map<ServiceEnum, Session> connectionMap;
     private final ConfigQA configQA;
 
     private static BaseConnection instance;
@@ -36,47 +36,9 @@ public class BaseConnection {
         return instance;
     }
 
-    public Connection getConnection(ServiceEnum serviceEnum) {
-        if (Objects.nonNull(serviceEnum)) {
-            return connectionMap.computeIfAbsent(serviceEnum,
-                    a -> {
-                        ConnectionProperties properties = configQA.getDbConnectionDataMap().get(a);
-                        Connection connection = null;
-                        try {
-                            connection = DriverManager.getConnection(properties.getUrl(),
-                                    properties.getUser(),
-                                    properties.getPassword());
-                        } catch (SQLException throwable) {
-                            throwable.printStackTrace();
-                        }
-                        return connection;
-                    });
-        }
-        throw new IllegalArgumentException();
-    }
-
-    public Connection getConnection2(ServiceEnum serviceEnum) {
-        if (Objects.nonNull(serviceEnum)) {
-            //(Session) wasn't in the manual
-            return connectionMap.computeIfAbsent(serviceEnum,
-                    a -> {
-                        Configuration configuration = new Configuration();
-                        configuration.setProperties(getSettings(a));
-                        getClasses(a).forEach(configuration::addAnnotatedClass);
-                        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                                .applySettings(configuration.getProperties()).build();
-                        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                        //(Connection) wasn't in the manual
-                        return (Connection) sessionFactory.openSession();
-                    });
-        }
-        throw new IllegalArgumentException();
-    }
-
     public Session getSession(ServiceEnum serviceEnum) {
         if (Objects.nonNull(serviceEnum)) {
-            //(Session) wasn't in the manual
-            return (Session) connectionMap.computeIfAbsent(serviceEnum,
+            return connectionMap.computeIfAbsent(serviceEnum,
                     a -> {
                         Configuration configuration = new Configuration();
                         configuration.setProperties(getSettings(a));
@@ -84,8 +46,7 @@ public class BaseConnection {
                         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                                 .applySettings(configuration.getProperties()).build();
                         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                        //(Connection) wasn't in the manual
-                        return (Connection) sessionFactory.openSession();
+                        return sessionFactory.openSession();
                     });
         }
         throw new IllegalArgumentException();
@@ -94,16 +55,22 @@ public class BaseConnection {
     public void closeConnection(ServiceEnum serviceEnum) {
         connectionMap.computeIfPresent(serviceEnum,
                 (a, b) -> {
-                    try {
-                        connectionMap.remove(a).close();
-                    } catch (SQLException exception) {
-                        exception.printStackTrace();
-                    }
+                    connectionMap.remove(a).close();
                     return null;
                 });
     }
 
-    //при помощи механизма switch, отберет нужные для работы с той или иной БД классы сущностей.
+    private Properties getSettings(ServiceEnum serviceEnum) {
+        Properties properties = new Properties();
+        ConnectionProperties connectionProperties = configQA.getDbConnectionDataMap().get(serviceEnum);
+        properties.put(Environment.DRIVER, connectionProperties.getDriver());
+        properties.put(Environment.DIALECT, connectionProperties.getDialect());
+        properties.put(Environment.URL, connectionProperties.getUrl());
+        properties.put(Environment.USER, connectionProperties.getUser());
+        properties.put(Environment.PASS, connectionProperties.getPassword());
+        return properties;
+    }
+
     private List<Class<?>> getClasses(ServiceEnum serviceEnum) {
         List<Class<?>> classes = new ArrayList<>();
         switch (serviceEnum) {
@@ -114,17 +81,4 @@ public class BaseConnection {
         }
         return classes;
     }
-
-    private Properties getSettings(ServiceEnum serviceEnum) {
-        Properties properties = new Properties();
-        ConnectionProperties connectionProperties = configQA.getDbConnectionDataMap().get(serviceEnum);
-        System.out.println(connectionProperties);
-        properties.put(Environment.DRIVER, connectionProperties.getDriver());
-        properties.put(Environment.DIALECT, connectionProperties.getDialect());
-        properties.put(Environment.URL, connectionProperties.getUrl());
-        properties.put(Environment.USER, connectionProperties.getUser());
-        properties.put(Environment.PASS, connectionProperties.getPassword());
-        return properties;
-    }
-
 }
