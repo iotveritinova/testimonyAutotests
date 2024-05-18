@@ -6,8 +6,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.testng.annotations.Test;
-import tripDemo.model.Passenger;
-import tripDemo.model.Trip;
+import tripDemo.model.PassengerEntity;
+import tripDemo.model.TripEntity;
 
 public class HyberTest {
     @Test
@@ -15,8 +15,8 @@ public class HyberTest {
         System.out.println("pumpum");
         Configuration configuration = new Configuration();
         configuration.configure();
-        configuration.addAnnotatedClass(Passenger.class);
-        configuration.addAnnotatedClass(Trip.class);
+        configuration.addAnnotatedClass(PassengerEntity.class);
+        configuration.addAnnotatedClass(TripEntity.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
@@ -39,7 +39,7 @@ public class HyberTest {
      //   System.out.println(newPassenger);
      //   System.out.println(passenger);
 
-        Trip entity = session.get(Trip.class, 3);
+        TripEntity entity = session.get(TripEntity.class, 3);
        System.out.println(entity);
 
 

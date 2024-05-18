@@ -7,9 +7,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import tripDemo.dictionaries.ServiceEnum;
-import tripDemo.model.Company;
-import tripDemo.model.Passenger;
-import tripDemo.model.Trip;
+import tripDemo.model.CompanyEntity;
+import tripDemo.model.PassengerEntity;
+import tripDemo.model.TripEntity;
 import tripDemo.service.ConfigQA;
 
 import java.sql.Connection;
@@ -108,9 +108,9 @@ public class BaseConnection {
         List<Class<?>> classes = new ArrayList<>();
         switch (serviceEnum) {
             case TRIP:
-                classes.add(Company.class);
-                classes.add(Trip.class);
-                classes.add(Passenger.class);
+                classes.add(CompanyEntity.class);
+                classes.add(TripEntity.class);
+                classes.add(PassengerEntity.class);
         }
         return classes;
     }
@@ -118,6 +118,7 @@ public class BaseConnection {
     private Properties getSettings(ServiceEnum serviceEnum) {
         Properties properties = new Properties();
         ConnectionProperties connectionProperties = configQA.getDbConnectionDataMap().get(serviceEnum);
+        System.out.println(connectionProperties);
         properties.put(Environment.DRIVER, connectionProperties.getDriver());
         properties.put(Environment.DIALECT, connectionProperties.getDialect());
         properties.put(Environment.URL, connectionProperties.getUrl());

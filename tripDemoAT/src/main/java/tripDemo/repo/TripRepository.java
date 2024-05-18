@@ -11,10 +11,24 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TripRepository {
+public class TripRepository extends BaseRepository {
 
-    private final Connection connection = BaseConnection.getInstance().getConnection(ServiceEnum.TRIP);
+    private static TripRepository instance;
 
+    public static TripRepository getInstance() {
+        if (instance == null) {
+            instance = new TripRepository();
+        }
+        return instance;
+    }
+
+    protected TripRepository() {
+        super(ServiceEnum.TRIP);
+    }
+
+    //private final Connection connection = BaseConnection.getInstance().getConnection(ServiceEnum.TRIP);
+
+    /*
     public Trip getById(long id) {
         String sql = "select * from trip where id = ?";
         ResultSet resultSet;
@@ -40,4 +54,6 @@ public class TripRepository {
         }
         return trip;
     }
+
+     */
 }

@@ -41,8 +41,8 @@ public class ConfigQA {
         connectionProperties.setUrl(dbConf.getString("url"));
         connectionProperties.setPassword(dbConf.getString("password"));
         connectionProperties.setUser(dbConf.getString("user"));
-        connectionProperties.setUrl(dbConf.getString("driver"));
-        connectionProperties.setPassword(dbConf.getString("dialect"));
+        connectionProperties.setDriver(dbConf.getString("driver"));
+        connectionProperties.setDialect(dbConf.getString("dialect"));
         dbConnectionDataMap.put(value, connectionProperties);
     }
 
