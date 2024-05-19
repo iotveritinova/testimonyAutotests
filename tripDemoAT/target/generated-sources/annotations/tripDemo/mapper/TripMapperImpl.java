@@ -11,7 +11,7 @@ import tripDemo.model.TripEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-19T20:09:57+0400",
+    date = "2024-05-19T20:38:45+0400",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 public class TripMapperImpl implements TripMapper {
@@ -49,6 +49,7 @@ public class TripMapperImpl implements TripMapper {
 
         TripEntity tripEntity = new TripEntity();
 
+        tripEntity.setCompany( tripToCompanyEntity( trip ) );
         if ( trip.getId() != null ) {
             tripEntity.setId( trip.getId() );
         }
@@ -100,6 +101,20 @@ public class TripMapperImpl implements TripMapper {
         }
 
         return list1;
+    }
+
+    protected CompanyEntity tripToCompanyEntity(Trip trip) {
+        if ( trip == null ) {
+            return null;
+        }
+
+        CompanyEntity companyEntity = new CompanyEntity();
+
+        if ( trip.getCompanyId() != null ) {
+            companyEntity.setId( trip.getCompanyId() );
+        }
+
+        return companyEntity;
     }
 
     protected PassengerEntity passengerToPassengerEntity(Passenger passenger) {
