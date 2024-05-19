@@ -11,7 +11,7 @@ import tripDemo.model.TripEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-19T20:38:45+0400",
+    date = "2024-05-19T23:45:00+0400",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 public class TripMapperImpl implements TripMapper {

@@ -1,5 +1,3 @@
-package tripDemo;
-
 import org.testng.annotations.BeforeSuite;
 import tripDemo.dictionaries.IPathEnum;
 import tripDemo.service.ConfigQA;

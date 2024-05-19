@@ -1,5 +1,3 @@
-package tripDemo;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.AfterMethod;
