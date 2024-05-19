@@ -2,6 +2,7 @@ package tripDemo;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.Assertions;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tripDemo.comparator.TripComparator;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class TripTest extends BaseTest {
 
     private Trip trip;
+    private TripEntity tripEntity;
 
     @BeforeMethod
     public void init() {
@@ -34,28 +36,29 @@ public class TripTest extends BaseTest {
         trip = TripSteps.createTrip(trip);
     }
 
-    @Test
+    @Test(groups = {"withAddedEntity"})
     public void createTrip() {
         Trip responseTrip = TripSteps.sendPost(trip);
         new TripComparator(responseTrip, trip).compare();
-        TripEntity tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
+        tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
         new TripDBComparator(responseTrip, tripEntity).compare();
     }
 
-    @Test(groups = {"withExistTrip"})
+    @Test(groups = {"withExistTrip", "withAddedEntity"})
     public void getTrip() {
         Trip responseTrip = TripSteps.sendGet(trip.getId());
         new TripComparator(trip, responseTrip).compare();
-        TripEntity tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
+        tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
         new TripDBComparator(responseTrip, tripEntity).compare();
     }
 
-    @Test(groups = {"withExistTrip"})
+    @Test(groups = {"withExistTrip", "withAddedEntity"})
     public void putTrip() {
         trip.setPlane("newPlane");
+
         Trip responseTrip = TripSteps.sendPut(trip);
         new TripComparator(trip, responseTrip).compare();
-        TripEntity tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
+        tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
         new TripDBComparator(responseTrip, tripEntity).compare();
     }
 
@@ -66,4 +69,10 @@ public class TripTest extends BaseTest {
         TripEntity tripEntity = TripRepository.getInstance().getById(TripEntity.class, responseTrip.getId());
         Assertions.assertThat(tripEntity).isNull();
     }
+
+    @AfterMethod(onlyForGroups = {"withAddedEntity"})
+    public void deleteEntity() {
+        TripRepository.getInstance().delete(tripEntity);
+    }
+
 }

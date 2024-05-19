@@ -57,4 +57,5 @@ public class TripSteps {
         tripEntity = TripRepository.getInstance().create(tripEntity);
         return tripMapper.toDto(tripEntity);
     }
+
 }

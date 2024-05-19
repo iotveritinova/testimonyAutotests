@@ -3,9 +3,6 @@ package tripDemo.repo;
 import org.hibernate.Session;
 import tripDemo.db.BaseConnection;
 import tripDemo.dictionaries.ServiceEnum;
-import tripDemo.mapper.TripMapper;
-import tripDemo.model.Trip;
-import tripDemo.model.TripEntity;
 
 public abstract class BaseRepository {
     private ServiceEnum serviceEnum;
@@ -28,6 +25,7 @@ public abstract class BaseRepository {
         closeSession();
         return object;
     }
+
     public <T> T create(T object) {
         Session session = getSession();
         session.beginTransaction();
@@ -35,5 +33,13 @@ public abstract class BaseRepository {
         session.getTransaction().commit();
         closeSession();
         return object;
+    }
+
+    public <T> void delete(T object) {
+        Session session = getSession();
+        session.beginTransaction();
+        session.remove(object);
+        session.getTransaction().commit();
+        closeSession();
     }
 }
