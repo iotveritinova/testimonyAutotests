@@ -1,15 +1,6 @@
 package tripDemo.repo;
 
-import tripDemo.db.BaseConnection;
 import tripDemo.dictionaries.ServiceEnum;
-import tripDemo.model.Trip;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class TripRepository extends BaseRepository {
 
